@@ -32,8 +32,12 @@ console.log( JSON.stringify( result ) );
   
 # Get Started  
 To get started, run the demo program as below:  
+
+( Use the commandline to run the command: node demo/demo.mjs )
+
 ```
-fm-indexer]$ node demo/demo.mjs 
+PROMPT> node demo/demo.mjs 
+
 FM-Index Fuzzy Search Demo
 ==========================
 
