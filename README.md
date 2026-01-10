@@ -5,7 +5,7 @@ This is a NodeJS library that can be used to map human written inexact text to w
   
 Example:  
 ---------------------------------------------------------------  
-  
+```  
 import * as fmIndex from '../src/fmIndex.mjs';  
   
 fmIndex.setPenalies(  
@@ -27,6 +27,6 @@ for( let i=0; i<dictionary.length; i++ ) {
 let results = fmIndex.search( index, "hellow" );  
   
 console.log( JSON.stringify( result ) );  
-  
+```  
 ---------------------------------------------------------------  
   
