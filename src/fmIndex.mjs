@@ -1,20 +1,23 @@
-/***********************************************/
-/*                                             */
-/* Fuzzy-Murray Indexing system                */
-/* (c) 2025 by Dusty Wilhem Murray             */
-/*                                             */ 
-/* Current version only works for larger words */
-/*                                             */
-/***********************************************/
+/**
+ * Copyright (c) 2026 Dusty Wilhem Murray  
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+ */
 
 
-/* Exact matches should never be beaten */
 const EXTREMELY_HIGH_CONFIDENCE = 100000;
 const MAX_FUZZY_CONFIDENCE = 0.9;
 const MAX_FUZZY_CONFIDENCE_LOWBOUND = 0.8;
 
-const CONSONANT_PENALTY_FRACTION=0.15; //TODO should be in external penalties object
-const FIRST_LETTER_FACTOR=1.85; //TODO should be in external penalties object
+const CONSONANT_PENALTY_FRACTION=0.15; 
+const FIRST_LETTER_FACTOR=1.85;  
 
 const exactExitEarly = true;
 const startStrengthBonus = 0.8;
@@ -22,9 +25,6 @@ const endStrengthBonus = 0.7;
 const amplifyPhonetic = 1.4;
 const lcStrength = 0.9;
 
-/* discard results factor X of thresshold (example 0.6 = 60% percent of thresshold) */
-/* this works for the auto created thresshold from tuning data */
-//const cutOffFactor = 0.0;
 const cutOffFactor = 0.6; 
 const partBonus = 2.5;
 
@@ -46,7 +46,7 @@ export const L4 = 8;  /* Permissive n-grams */
 export const L_ALL = L1 | L2 | L3 | L4;
 export const L_DEFAULT =    L2 | L4;
 
-
+/* Only english supported for now */
 let phonMatches_en_1 = [
     {
         o: 'a',
@@ -684,16 +684,6 @@ const CONSONANTS_PHONETIC = (() => {
 
 function sameness(word1, word2) {
 
-    /* make sure this old length confidence code is not lost
-
-        //let lengthDifference = Math.abs( l1 - l2 );
-        //let p = 1.0;
-        //for( let i=0; i< lengthDifference; i++ ) {
-        //    p *= 0.9;
-        //}
-
-    */
-
     const len1 = word1.length;
     const len2 = word2.length;
     const minLen = len1 < len2 ? len1 : len2;
@@ -793,13 +783,6 @@ function sameness_old( word1, word2 ) {
     let spacesPenalty = penaltiesObject.spaceCountFactor * spacesDiff;
     let spacesScore = 1.0 - spacesPenalty;
 
-    //console.log("PenaltiesObject: ", penaltiesObject)
-
-    //console.log("Sameness('" + word1 + "' , '" + word2 + "') => letterScore:", letterScore.toFixed(3), " lengthScore:", lengthScore.toFixed(3));
-
-    //console.log("Sameness('" + word1 + "' , '" + word2 + "') => letterScore:", letterScore.toFixed(3),
-    //    " lengthScore:", lengthScore.toFixed(3), " spacesScore:", spacesScore.toFixed(3) );
-
     let score1 = ( ( letterScore * lengthScore * spacesScore ) );
     
     //now apply a penalty for constenat letter sequences that do not match
@@ -820,7 +803,7 @@ function sameness_old( word1, word2 ) {
     let ph_w1 = wordSimplePhoneticify( word1 );
     let ph_w2 = wordSimplePhoneticify( word2 );
 
-    //console.log(" Phonetic words: ", ph_w1, ph_w2)
+ 
     //loop through the consonants, and check if it appears in only one of the words
     //then apply penaly
     for( let i=0; i< consonants_arr.length; i++ ) {
@@ -840,17 +823,11 @@ function sameness_old( word1, word2 ) {
         firstLetterFactor = FIRST_LETTER_FACTOR;
     }
 
-    //console.log("Sameness('" + word1 + "' , '" + word2 + "') => firstLetterFactor:", firstLetterFactor.toFixed(3) );
-
-    //let totalSearchScore = score1 * consonantPenaltyFactor;
-    //log consonant and final score for this word combo
-    //console.log(" Consonant penalty factor ("+word1+","+word2+"):", totalSearchScore.toFixed(3), "-",consonantPenaltyFactor.toFixed(3), score1.toFixed(3) );
     return score1 * firstLetterFactor * consonantPenaltyFactor;
 }
 
 export function search( index, fuzzyKey, lowConfidenceCutoff = 0.1) {
 
-    //let earlyCutOff = lowConfidenceCutoff * .7;
     let flags = index._____.flags || L_DEFAULT;
     let keyCandidates = makeKeys( fuzzyKey, flags );
     let results = [];
@@ -864,28 +841,24 @@ export function search( index, fuzzyKey, lowConfidenceCutoff = 0.1) {
                 let confidence = Math.min( entry.c, keyObj.c );
                 if( confidence == 1.0 && exactExitEarly) {
 
-                    //console.log("Exact match found for key:", fuzzyKey, "=>" , entry) ; //TODO remove this
                     return [{
                             key: entry.hardKey, 
-                            //wKey: entry.hardKey,
                             data: entry.data, 
                             c: 1.0, 
-                            //debug: "Perfect match",
                             success: true,
                             rawC: EXTREMELY_HIGH_CONFIDENCE,
 
                         }];
                 }
 
-                //if( entry.c > earlyCutOff ) {
-                    results.push( { 
+
+                results.push( { 
                         key: entry.key, 
                         wKey: entry.hardKey,
                         data: entry.data, 
                         c: entry.c,
 
-                    } );
-                //}
+                } );
             }
         }
     }
@@ -916,9 +889,6 @@ export function search( index, fuzzyKey, lowConfidenceCutoff = 0.1) {
     elapsed = Date.now() - now; now = Date.now();
     if(perfTrace) console.log("FZMEASURE: sorting time: " + elapsed + " ms")
 
-    //return sortWinners( results, index._____.tuning );
-
-
     now = Date.now();
     elapsed = 0;    
     let winners = sortWinners( results, fuzzyKey,  index._____.tuning, lowConfidenceCutoff );
@@ -944,7 +914,6 @@ function sortWinners( searchResults, fuzzyKey, tuning, lowConfidenceCutoff ) {
 
         if(!candidates[ candidateKey ]) {
 
-            //let lengthDifference = Math.abs( candidateKey.length - fuzzyKey.length );
             let candidateRec = { 
                 key: candidateKey, 
                 c: 0.0, 
@@ -952,8 +921,7 @@ function sortWinners( searchResults, fuzzyKey, tuning, lowConfidenceCutoff ) {
                 evidenceParts: 0,
                 totalSearchScore: 0 ,
                 exact: false,
-                //lengthDifference: lengthDifference
-                //matchingLetters: countMatchingLetters( candidateKey, fuzzyKey ),
+
             };
             if( debugData ) {
                 candidateRec.parts = "";
@@ -1067,6 +1035,4 @@ function sortWinners( searchResults, fuzzyKey, tuning, lowConfidenceCutoff ) {
         candidatesArray.sort( (a,b) => b.c - a.c );
         return candidatesArray; 
     }
-
-
 }
