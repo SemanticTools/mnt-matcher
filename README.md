@@ -1,17 +1,17 @@
-# fm-indexer
+# mnt-matcher
 
-Fuzzy Murray Indexer - Node.js library for fuzzy word matching with confidence scores.
+Mint Matcher (Murray Near Text) - Node.js library for fuzzy word matching with confidence scores.
 
 Index words, then retrieve partial/inexact matches with probabilities. Useful for NLP, search suggestions, typo correction.
 
 ## Installation
 ```bash
-npm install @semanticlabs/fm-indexer
+npm install @semanticlabs/mnt-matcher
 ```
 
 ## Usage
 ```javascript
-import * as fmIndex from '@semanticlabs/fm-indexer';
+import * as fmIndex from '@semanticlabs/mnt-matcher';
 
 // Configure penalties (optional)
 fmIndex.setPenalties({
@@ -37,7 +37,7 @@ console.log(JSON.stringify(results));
 
 # Installation Demo files
 ```bash
-git clone https://github.com/B2B-Integrations/fm-demo
+git clone https://github.com/B2B-Integrations/mnt-demo
 ```
 
 Run the interactive demo:
@@ -49,7 +49,7 @@ Example session:
 ```
 PROMPT> node demo/demo.mjs 
 
-FM-Index Fuzzy Search Demo
+MNT-Match Fuzzy Search Demo
 ==========================
 
 Building index...
@@ -59,7 +59,7 @@ Index Statistics:
   Total keys:       2599
   Total paths:      4308
   Keys per word:    4.73
-  FM-Index level:   10
+  MNT-Match level:   10
 
 ------------------------------------------
 Type a word to search (or 'quit' to exit)

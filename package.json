@@ -1,19 +1,21 @@
 {
-  "name": "@semanticlabs/fm-indexer",
+  "name": "@semanticlabs/mnt-matcher",
   "version": "0.8.0",
-  "description": "FM-Index NLP indexing and searching library for JavaScript/Node.js",
+  "description": "MNT-Matcher - NLP matching and searching library for JavaScript/Node.js",
   "type": "module",
-  "main": "src/fmIndex.mjs",
+  "main": "src/mntMatch.mjs",
   "exports": {
-    ".": "./src/fmIndex.mjs"
+    ".": "./src/mntMatch.mjs"
   },
   "files": [
     "src"
   ],
   "keywords": [
-    "fm-index",
+    "mnt-matcher",
     "indexing",
-    "search"
+    "search",
+    "text-search",
+    "fuzzy-search"
   ],
   "author": "Dusty Wilhelm Murray / Semantic Labs AB",
   "license": "MIT"

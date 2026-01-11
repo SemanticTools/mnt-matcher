@@ -3,7 +3,7 @@ const srcPath = useWip ? '../src-wip/fmIndex.mjs' : '../src/fmIndex.mjs';
 const fmIndex = await import(srcPath);
 
 
-console.log("Testing Fuzzy Matching FM-Index Module (Large data)" );
+console.log("Testing Fuzzy Matching MNT-Match Module (Large data)" );
 
 //load indexfile not (using fmIndex library) ./more/queryTestPf-data.fzIndex.json and parse as JSON (not using fmIndex.loadIndexFile)
 

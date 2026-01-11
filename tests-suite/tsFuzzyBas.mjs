@@ -4,7 +4,7 @@ const fmIndex = await import(srcPath);
 
 //import * as fmIndex from '../src/fmIndex.mjs';
 
-console.log("Testing Fuzzy Matching FM-Index Module (Basic)" );
+console.log("Testing Fuzzy Matching MNT-Match Module (Basic)" );
 
 fmIndex.setPenalies( 
     {
@@ -51,7 +51,7 @@ for( let arg of args ) {
 }
 
 
-console.log("FM-Index Level:", LEVEL );
+console.log("MNT-Match Level:", LEVEL );
 
 function addNoiseToIndex( index ) {
     //add some noise entries to index to simulate real world usage

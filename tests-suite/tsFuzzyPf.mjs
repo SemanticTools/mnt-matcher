@@ -4,7 +4,7 @@ const fmIndex = await import(srcPath);
 
 let fs = await import('fs/promises');
 
-console.log("Testing Fuzzy Matching FM-Index Module (Performance)" );
+console.log("Testing Fuzzy Matching MNT-Match Module (Performance)" );
 
 //load indexfile not (using fmIndex library) ./more/queryTestPf-data.fzIndex.json and parse as JSON (not using fmIndex.loadIndexFile)
 

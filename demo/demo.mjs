@@ -35,7 +35,7 @@ fmIndex.setPenalies({
 });
 
 // Build index
-console.log("FM-Index Fuzzy Search Demo");
+console.log("MNT-Match Fuzzy Search Demo");
 console.log("==========================\n");
 console.log("Building index...");
 
@@ -55,7 +55,7 @@ console.log(`  Words indexed:    ${wordCount}`);
 console.log(`  Total keys:       ${keyCount}`);
 console.log(`  Total paths:      ${totalPaths}`);
 console.log(`  Keys per word:    ${(keyCount / wordCount).toFixed(2)}`);
-console.log(`  FM-Index level:   ${LEVEL}`);
+console.log(`  MNT-Match level:  ${LEVEL}`);
 console.log("\n------------------------------------------");
 console.log("Type a word to search (or 'quit' to exit)");
 console.log("Try misspellings like 'elefant', 'buterfly', 'computr'");
